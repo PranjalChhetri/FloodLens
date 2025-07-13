@@ -1,17 +1,55 @@
-<<<<<<< HEAD
-# React + Vite
+# 🌊 FloodLens
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FloodLens is an AI-powered flood risk prediction and visualization platform built for disaster resilience. It helps users visualize rainfall patterns, elevation-based flood risk, emergency alerts, and more — all in one dashboard.
 
-Currently, two official plugins are available:
+🚧 *Note:* The project is currently *50% complete*. The remaining features, UI polish, and performance enhancements will be built collaboratively during the hackathon.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📍 Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# FloodLens
-Flood forecasting lacks visual "what-if" scenarios and explanations. FloodLens uses physics-informed GANs for satellite flood imagery, with an LLM to explain predictions, building trust for decision-makers.
->>>>>>> 680455cc60d5de318650e5f03d2fc586b1f34a0b
+- 🌐 *Interactive Map View*
+  - Click anywhere on the map to simulate flood data.
+  - A popup appears showing:
+    - 📌 *Selected Location*
+    - 🏔 Elevation (mocked)
+    - 🌧 Rainfall (mocked 7-day forecast)
+    - 🚨 Flood Risk Status (Low / High)
+    - 💡 Risk Reason
+    - 📄 Option to *Download a PDF Report*
+
+- 🧠 *AI-Powered Dashboard*
+  - Live alerts, 7-day forecast & model status
+  - Displays risk level, reason, and GPT-generated forecast logic
+
+- 📊 *Rainfall Chart*
+  - Line graph with simulated rainfall over 7 days
+
+- 🌙 *Dark Mode Toggle*
+  - User-friendly dark/light mode switch
+
+- 📱 *Mobile Responsive*
+  - Adaptive layout and collapsible sidebar
+
+---
+
+## ⚙ Tech Stack
+
+- 🌐 *React + Vite* — Fast frontend development
+- 🗺 *Leaflet.js + OpenStreetMap* — Interactive map view
+- 📊 *Chart.js* — Rainfall visualization
+- 📄 *jsPDF* — Export detailed flood reports as PDFs
+- 🎨 *Tailwind CSS* — Responsive and dark-mode UI
+- 🧠 *AI + LLM (GPT)* — Used for:
+  - Chain-of-Thought (CoT) reasoning in risk explanation
+  - Generating flood forecasts and justifications
+  - Model status messaging with natural language
+
+---
+
+## 🚀 Setup Instructions
+
+1. *Clone the repository*
+   ```bash
+   git clone https://github.com/your-username/floodlens.git
+   cd floodlens
