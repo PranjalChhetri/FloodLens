@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix: Leaflet map must have height */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100;
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  @apply focus:outline-none;
+}
