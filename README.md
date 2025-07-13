@@ -47,6 +47,13 @@ FloodLens is an AI-powered flood risk prediction and visualization platform buil
 
 ---
 
+*Upcoming Features* (Post-hackathon)
+	•	🌐 Live rainfall & flood data via APIs
+	•	🔔 Push alerts for flood-prone zones
+	•	📱 PWA for mobile offline support
+	•	🌈 Themed map layers & animated overlays
+
+
 ## 🚀 Setup Instructions
 
 1. *Clone the repository*
