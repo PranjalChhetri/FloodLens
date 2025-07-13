@@ -2,6 +2,8 @@
 
 FloodLens is an AI-powered flood risk prediction and visualization platform built for disaster resilience. It helps users visualize rainfall patterns, elevation-based flood risk, emergency alerts, and more — all in one dashboard.
 
+THEME: 🌱Sustainable Tech and CLimate Innovation
+
 🚧 *Note:* The project is currently *50% complete*. The remaining features, UI polish, and performance enhancements will be built collaboratively during the hackathon.
 
 ---
