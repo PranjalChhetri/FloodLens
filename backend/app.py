@@ -1,15 +1,14 @@
 import requests
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import os
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()  # Load TOGETHER_API_KEY from .env
 
 app = FastAPI()
 
-# Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,16 +27,15 @@ async def explain_flood_risk(req: FloodRequest):
 You are a hydrology expert. Analyze the following:
 
 Elevation: {req.elevation} meters  
-Rainfall: {req.rainfall} mm  
+Rainfall: {req.rainfall} mm
 
 Using step-by-step reasoning, assess the flood risk in this area.
 """
-
     try:
         response = requests.post(
             "https://api.together.xyz/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer sk-<25112f184f05d7d039c4e3472f1dee6dc35118064ef687ab3fef827655ae2db0>", 
+                "Authorization": f"Bearer {os.getenv('TOGETHER_API_KEY')}",
                 "Content-Type": "application/json"
             },
             json={
