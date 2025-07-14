@@ -1,19 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI
-
-import os
-load_dotenv()
-# ✅ Use the latest OpenAI SDK
-client = OpenAI(api_key=os.getenv("sk-proj-REPLACE_WITH_YOUR_KEY"))
+import requests
+import threading
 
 app = FastAPI()
 
-# ✅ Allow frontend to access backend
+# Enable frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your frontend domain
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,26 +20,51 @@ class FloodRequest(BaseModel):
     rainfall: float
 
 @app.post("/explain-flood-risk")
-async def explain_flood(req: FloodRequest):
-    try:
-        prompt = f"""
-You are an expert hydrologist. Based on the following inputs:
+async def explain_flood_risk(req: FloodRequest):
+    prompt = f"""
+You are a hydrology expert. Analyze the following:
 
-- Elevation: {req.elevation} meters
-- Rainfall: {req.rainfall} mm
+Elevation: {req.elevation} meters
+Rainfall: {req.rainfall} mm
 
-Explain whether the area is at flood risk using a Chain-of-Thought reasoning style.
+Using step-by-step reasoning, assess the flood risk in this area.
 """
-
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # You can use "gpt-4" if your key supports it
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "gemma:2b",
+                "prompt": prompt,
+                "stream": False
+            },
+            timeout=60
         )
-
-        explanation_text = response.choices[0].message.content.strip()
-        return {"explanation": explanation_text}
-
+        data = response.json()
+        return {"explanation": data.get("response", "No explanation generated.")}
     except Exception as e:
-        print("❌ OpenAI Error:", e)
         return {"explanation": f"Error: {str(e)}"}
+
+@app.get("/status")
+def status():
+    return {"status": "FloodLens AI active with Ollama (Gemma 2B)"}
+
+# 🔥 Warm up Ollama on startup
+@app.on_event("startup")
+def warmup_ollama():
+    def preload_model():
+        try:
+            requests.post(
+                "http://localhost:11434/api/generate",
+                json={
+                    "model": "gemma:2b",
+                    "prompt": "Warm up.",
+                    "stream": False
+                },
+                timeout=60
+            )
+            print("✅ Ollama model warmed up.")
+        except Exception as e:
+            print(f"⚠️ Ollama warmup failed: {e}")
+
+    # Run in background thread so server starts immediately
+    threading.Thread(target=preload_model).start()

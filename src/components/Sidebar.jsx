@@ -1,75 +1,96 @@
 import React from "react";
+import {
+  Home,
+  MapPin,
+  Activity,
+  Settings,
+  Sun,
+  Moon,
+  X,
+} from "lucide-react";
 
-const Sidebar = ({ darkMode, setDarkMode, sidebarOpen, setSidebarOpen, risk, forecast, alerts, modelStatus }) => {
+const Sidebar = ({ darkMode, setDarkMode, sidebarOpen, setSidebarOpen }) => {
+  const handleOptionClick = (label) => {
+    console.log(`Clicked: ${label}`);
+
+    // Example actions:
+    if (label === "Dashboard") {
+      document.getElementById("dashboard-section")?.scrollIntoView({ behavior: "smooth" });
+    } else if (label === "Map View") {
+      document.getElementById("map-section")?.scrollIntoView({ behavior: "smooth" });
+    } else if (label === "Reports") {
+      document.getElementById("reports-section")?.scrollIntoView({ behavior: "smooth" });
+    } else if (label === "Settings") {
+      document.getElementById("settings-section")?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Close sidebar only on mobile
+    if (window.innerWidth < 640 && setSidebarOpen) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <aside
-      className={`fixed top-0 left-0 z-40 h-full w-64 bg-blue-600 text-white shadow-lg transform transition-transform duration-300 ${
+      className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-800 shadow-2xl transform transition-transform duration-300 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } sm:translate-x-0 sm:static sm:h-screen`}
+      } sm:translate-x-0 sm:static sm:h-screen sm:flex`}
     >
-      <div className="flex flex-col h-full p-5 space-y-6">
-        {/* Dashboard Summary Card */}
-        <div className="bg-white text-gray-900 rounded-xl shadow p-4 mb-4">
-          <h2 className="text-xl font-bold text-blue-900 mb-4 text-center">FloodLens Dashboard</h2>
-          <div className="mb-3">
-            <div className="bg-blue-200 p-2 rounded mb-2">
-              <span className="font-semibold">Current Risk Level: </span>
-              <span className="text-blue-800 font-bold">{risk}</span>
-            </div>
-            <div className="bg-cyan-100 p-2 rounded mb-2">
-              <span className="font-semibold">Forecast: </span>
-              <span className="text-cyan-800 font-bold">{forecast}</span>
-            </div>
-            <div className="bg-yellow-100 p-2 rounded mb-2">
-              <span className="font-semibold">Recent Alerts:</span>
-              <ul className="list-disc list-inside text-yellow-900 text-sm ml-4 mt-1">
-                {alerts && alerts.map((alert, i) => (
-                  <li key={i}>{alert}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-blue-100 p-2 rounded">
-              <span className="font-semibold">Model Status: </span>
-              <span className="text-blue-900 text-sm">{modelStatus}</span>
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col h-full p-5 space-y-6 text-gray-900 dark:text-white">
         {/* Logo & Close */}
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <img src="/floodlens-logo.png" alt="Logo" className="h-8" />
-            <h1 className="text-lg font-bold">FloodLens</h1>
+          <div className="flex items-center gap-3">
+            <img src="/floodlens-logo.png" alt="Logo" className="h-9" />
+            <h1 className="text-xl font-extrabold text-blue-700 dark:text-blue-300">
+              FloodLens
+            </h1>
           </div>
           <button
-            className="sm:hidden p-1 hover:text-red-300"
+            className="sm:hidden p-1 hover:text-red-500"
             onClick={() => setSidebarOpen(false)}
           >
-            ✕
+            <X size={22} />
           </button>
         </div>
+
         {/* Navigation */}
-        <nav className="flex flex-col gap-5 text-sm">
-          <a href="#" className="flex items-center gap-2 hover:text-blue-200">
-            🏠 Dashboard
-          </a>
-          <a href="#" className="flex items-center gap-2 hover:text-blue-200">
-            🗺 Map View
-          </a>
-          <a href="#" className="flex items-center gap-2 hover:text-blue-200">
-            📊 Reports
-          </a>
-          <a href="#" className="flex items-center gap-2 hover:text-blue-200">
-            ⚙️ Settings
-          </a>
+        <nav className="flex flex-col gap-5 text-sm font-medium">
+          <button
+            onClick={() => handleOptionClick("Dashboard")}
+            className="flex items-center gap-3 hover:text-blue-600 text-left"
+          >
+            <Home size={18} /> Dashboard
+          </button>
+          <button
+            onClick={() => handleOptionClick("Map View")}
+            className="flex items-center gap-3 hover:text-blue-600 text-left"
+          >
+            <MapPin size={18} /> Map View
+          </button>
+          <button
+            onClick={() => handleOptionClick("Reports")}
+            className="flex items-center gap-3 hover:text-blue-600 text-left"
+          >
+            <Activity size={18} /> Reports
+          </button>
+          <button
+            onClick={() => handleOptionClick("Settings")}
+            className="flex items-center gap-3 hover:text-blue-600 text-left"
+          >
+            <Settings size={18} /> Settings
+          </button>
         </nav>
+
         {/* Toggle Button */}
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="mt-auto flex items-center gap-2 text-sm bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
-        >
-          {darkMode ? "☀" : "🌙"}
-          {darkMode ? "Light Mode" : "Dark Mode"}
-        </button>
+        <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-600">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="w-full flex items-center justify-center gap-2 text-sm bg-gradient-to-r from-gray-700 to-gray-900 text-white px-4 py-2 rounded-xl hover:from-gray-600 hover:to-gray-800 transition"
+          >
+            {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            {darkMode ? "Light Mode" : "Dark Mode"}
+          </button>
+        </div>
       </div>
     </aside>
   );
