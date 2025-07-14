@@ -12,7 +12,7 @@ THEME: 🌱Sustainable Tech and Climate Innovation
 
 - 🌐 *Interactive Map View*
   - Click anywhere on the map to simulate flood data.
-  - A popup appears showing:
+  - A popup appears(when clicked the marker) showing:
     - 📌 *Selected Location*
     - 🏔 Elevation (mocked)
     - 🌧 Rainfall (mocked 7-day forecast)
