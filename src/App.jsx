@@ -82,7 +82,7 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("http://localhost:5000/status");
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/status`);
         const data = await res.json();
         setModelStatus(data.status || "Model running");
       } catch {
@@ -140,7 +140,7 @@ const App = () => {
 
   const runMistralExplanation = async () => {
     try {
-      const res = await fetch("http://localhost:5000/explain-flood-risk", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/explain-flood-risk`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ elevation, rainfall }),
@@ -190,6 +190,7 @@ const App = () => {
               className="bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+              
             </button>
           </header>
 
